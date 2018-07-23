@@ -1,0 +1,58 @@
+{
+  "name": "vue-scrollbar-live",
+  "version": "1.0.0",
+  "description": "A vue scrollbar component for PC, surpport SSR.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack  --progress --mode production",
+    "eslint": "./node_modules/.bin/eslint ./src/index.vue",
+    "test": "cross-env BABEL_ENV=test karma start --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/livelybone/vue-scrollbar-live.git"
+  },
+  "keywords": [
+    "vue",
+    "scrollbar",
+    "PC",
+    "small size",
+    "SSR"
+  ],
+  "author": "livelybone",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/livelybone/vue-scrollbar-live/issues"
+  },
+  "homepage": "https://github.com/livelybone/vue-scrollbar-live#readme",
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.21",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-istanbul": "^4.1.6",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-vue": "^4.7.0",
+    "karma": "^2.0.4",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.2",
+    "karma-mocha": "^1.3.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.32",
+    "karma-webpack": "^3.0.0",
+    "mocha": "^5.2.0",
+    "vue": "^2.5.16",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.16.1",
+    "webpack-command": "^0.2.1"
+  }
+}
