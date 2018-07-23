@@ -75,7 +75,7 @@ export default {
       this.isTop = false;
       this.isBottom = false;
       const { height } = this;
-      this.setDelta({ delta: ((ev.to === 'bottom' ? ev.value : -ev.value) / height.content) * height.wrap });
+      this.setDelta({ delta: ev.dy / height.content * height.wrap });
     },
     drag(ev) {
       const e = ev || window.event;
@@ -87,7 +87,6 @@ export default {
         window.addEventListener('mousemove', this.drag);
         window.addEventListener('mouseup', this.drag);
       } else if (e.type === 'mousemove') {
-        console.log(e.clientY, this.begin.y, this.begin.scrollDelta);
         this.setDelta({ value: e.clientY - this.begin.y + this.begin.scrollDelta });
       } else if (e.type === 'mouseup') {
         this.begin.showBar = false;
