@@ -19,6 +19,9 @@ npm i -D vue-scrollbar-live
 ```js
 import Scrollbar from 'vue-srollbar-live';
 
+// 引入css
+import 'vue-srollbar-live/lib/index.css';
+
 // Global register
 Vue.component('scrollbar', Scrollbar);
 

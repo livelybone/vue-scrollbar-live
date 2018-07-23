@@ -58,6 +58,6 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "@livelybone/mouse-wheel": "^1.0.0"
+    "@livelybone/mouse-wheel": "^1.1.0"
   }
 }
