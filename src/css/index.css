@@ -1,0 +1,27 @@
+.scrollbar-wrap {
+  position: relative;
+  width: 100%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.scrollbar-content {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.scrollbar {
+  display: none;
+  position: absolute;
+  right: 4px;
+  width: 4px;
+  border-radius: 2px;
+  background: #eee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .1);
+  cursor: default !important;
+}
+
+.scrollbar-wrap:hover .scrollbar {
+  display: block;
+}

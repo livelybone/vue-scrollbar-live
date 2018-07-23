@@ -1,26 +1,31 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-function getEntries() {
-  const reg = /\.vue$/;
-  return require('fs').readdirSync(path.resolve(__dirname, './src/component'))
-    .filter(filename => reg.test(filename) && !fs.statSync(path.resolve(__dirname, './src/component', filename)).isDirectory())
-    .map(filename => ({ [filename.replace(reg, '')]: path.resolve(__dirname, './src/component', filename) }));
-}
+console.log(1, __dirname);
 
 const config = {
   mode: 'production',
-  entry: { index: ['babel-polyfill', './src/index.vue'] },
+  entry: { index: './src/Index.vue' },
   output: {
     path: path.resolve(__dirname, './lib'),
     filename: './[name].js',
-    library: 'VueSnackbar',
+    library: 'VueScrollBar',
     libraryTarget: 'umd',
     globalObject: 'this',
   },
   module: {
     rules: [
-      { test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader' },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            css: ['css-loader'],
+          },
+        },
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -38,6 +43,14 @@ const config = {
   },
   plugins: [
     new VueLoaderPlugin(),
+    // copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/css'),
+        to: 'css',
+        ignore: ['.*'],
+      },
+    ]),
   ],
 };
 
