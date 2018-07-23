@@ -56,5 +56,8 @@
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.0",
     "webpack-command": "^0.2.1"
+  },
+  "dependencies": {
+    "@livelybone/mouse-wheel": "^1.0.0"
   }
 }

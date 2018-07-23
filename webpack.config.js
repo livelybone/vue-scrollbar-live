@@ -14,6 +14,9 @@ const config = {
     libraryTarget: 'umd',
     globalObject: 'this',
   },
+  externals: {
+    mouseWheel: '@livelybone/mouse-wheel',
+  },
   module: {
     rules: [
       {

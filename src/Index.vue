@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import mouseWheel from '@livelybone/mouse-wheel';
+
 export default {
   name: 'Scrollbar',
   mounted() {
@@ -55,7 +57,10 @@ export default {
     },
     _contentStyle() {
       const { height } = this;
-      return { ...this.contentStyle, top: `${(-this.scrollDelta * height.content) / height.wrap}px` };
+      return {
+        ...this.contentStyle,
+        top: `${(-this.scrollDelta * height.content) / height.wrap}px`,
+      };
     },
   },
   methods: {
@@ -104,37 +109,7 @@ export default {
       }
     },
     bind() {
-      this.bindRes = this.bindMouseWheel(this.scroll, true);
-    },
-    bindMouseWheel(listener) {
-      let lastTime = 0;
-      let fn = (ev) => {
-        const e = ev || window.event;
-        let to = '';
-        if (e.wheelDelta) {
-          to = e.wheelDelta > 0 ? 'top' : 'bottom';
-        } else if (e.detail) {
-          to = e.detail < 0 ? 'top' : 'bottom';
-        }
-        if (!(this.isBottom && to === 'bottom') && !(this.isTop && to === 'top')) {
-          e.preventDefault();
-        }
-        const timeDelta = e.timeStamp - lastTime;
-        if (timeDelta < 20) return;
-        lastTime = e.timeStamp;
-        const delta = { to, value: 0, timeStamp: e.timeStamp };
-        delta.type = timeDelta > 300 ? 'wheel-start' : 'wheel';
-        delta.value = Math.abs((e.detail && e.detail * 40) || e.wheelDelta);
-        // listener({ ...delta, type: 'wheel-end' });
-        listener(delta);
-      };
-      window.addEventListener('DOMMouseScroll', fn);
-      window.addEventListener('mousewheel', fn);
-      return () => {
-        window.removeEventListener('DOMMouseScroll', fn);
-        window.removeEventListener('mousewheel', fn);
-        fn = null;
-      };
+      this.bindRes = mouseWheel.bindMouseWheel(this.scroll, true);
     },
   },
 };
