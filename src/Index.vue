@@ -108,7 +108,11 @@ export default {
       }
     },
     bind() {
-      this.bindRes = mouseWheel.bindMouseWheel(this.scroll, true);
+      this.bindRes = mouseWheel.bindMouseWheel(this.$refs.wrap, this.scroll, ({ dy, e }) => {
+        if (!(this.isBottom && dy > 0) && !(this.isTop && dy < 0)) {
+          e.preventDefault();
+        }
+      });
     },
   },
 };

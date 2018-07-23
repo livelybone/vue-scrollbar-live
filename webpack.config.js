@@ -2,8 +2,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-console.log(1, __dirname);
-
 const config = {
   mode: 'production',
   entry: { index: './src/Index.vue' },
@@ -13,9 +11,6 @@ const config = {
     library: 'VueScrollBar',
     libraryTarget: 'umd',
     globalObject: 'this',
-  },
-  externals: {
-    mouseWheel: '@livelybone/mouse-wheel',
   },
   module: {
     rules: [
