@@ -31,10 +31,41 @@ new Vue({
 })
 ```
 
-## props
+## Props
 | Name          | Type                                      | DefaultValue         | Description  |
 | ------------- | ----------------------------------------- | -------------------- | ------------ |
 | `maxHeight`   | `[String, Number]`                        | none                 | Used to set style max-height of the wrap `.scrollbar-wrap`.$/ |
 | `wrapStyle`   | `Object`                                  | none                 | Used to set the style of the wrap `.scrollbar-wrap`. |
 | `contentStyle`| `Object`                                  | none                 | Used to set the style of the content wrap `.scrollbar-content`. |
 | `barStyle`    | `Object`                                  | none                 | Used to set the style of the bar `.scrollbar`. |
+
+## Events
+| Name                  | EmittedData           | Description                                       |
+| --------------------- | --------------------- | ------------------------------------------------- |
+| `wrapClick`           | `event`               | `click` event of the wrap                         |
+| `startDrag`           | `Object`              | `mousedown` event of the scrollbar                |
+| `endDrag`             | `Object`              | `mouseup` event of the scrollbar                  | 
+
+## Rewrite style
+You can rewrite the style. the css file content maybe like:
+```scss
+  .scrollbar-wrap {
+    ...
+    
+    &:hover {
+    ...
+    
+      .scrollbar{
+        ... 
+      }
+    }
+  
+    .scrollbar-content {
+      ...
+    }
+  
+    .scrollbar {
+      ...
+    }
+  }
+```
