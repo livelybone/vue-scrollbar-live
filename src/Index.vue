@@ -1,10 +1,10 @@
 <template>
-  <div class="scrollbar-wrap" :style="_wrapStyle" @mouseover="bind" @mouseout="bindRes&&bindRes()"
-       ref="wrap">
+  <div class="scrollbar-wrap" :style="_wrapStyle"
+       @mouseover="bind" @mouseout="bindRes&&bindRes()" ref="wrap">
     <div class="scrollbar-content" :style="_contentStyle" ref="content">
       <slot/>
     </div>
-    <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle"
+    <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle" @click.stop=""
          @mousedown="drag"></div>
   </div>
 </template>
