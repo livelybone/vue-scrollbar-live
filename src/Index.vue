@@ -1,11 +1,11 @@
 <template>
-  <div class="scrollbar-wrap" :style="_wrapStyle"
+  <div class="scrollbar-wrap" :style="_wrapStyle" @click.stop="$emit('wrapClick', $event)"
        @mouseover="bind" @mouseout="bindRes&&bindRes()" ref="wrap">
     <div class="scrollbar-content" :style="_contentStyle" ref="content">
       <slot/>
     </div>
-    <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle" @click.stop=""
-         @mousedown="drag"></div>
+    <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle"
+         @mousedown.stop="drag"></div>
   </div>
 </template>
 
@@ -15,10 +15,10 @@ import MouseWheel from '@livelybone/mouse-wheel';
 export default {
   name: 'Scrollbar',
   mounted() {
-    this.height = this.getHeight();
+    this.getHeight();
   },
-  beforeUpdate() {
-    this.height = this.getHeight();
+  updated() {
+    this.getHeight();
   },
   props: {
     maxHeight: [Number, String],
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      height: {},
+      height: { wrap: 0, content: 0 },
       bindRes: null,
       scrollDelta: 0,
       isBottom: false,
@@ -41,8 +41,8 @@ export default {
       return typeof this.maxHeight === 'number' ? `${this.maxHeight}px` : this.maxHeight;
     },
     showBar() {
-      const { height } = this;
-      return height.content && height.wrap < height.content;
+      const { height: { wrap, content } } = this;
+      return content && wrap < content;
     },
     _wrapStyle() {
       const maxHeight = this.wrapHeight;
@@ -50,35 +50,34 @@ export default {
     },
     _barStyle() {
       if (!this.showBar) return null;
-      const { height } = this;
+      const { height: { wrap, content } } = this;
       return {
         ...this.barStyle,
         ...(this.begin.showBar ? { display: 'block' } : {}),
-        height: `${(height.wrap * height.wrap) / height.content}px`,
+        height: `${(wrap * wrap) / content}px`,
         top: `${this.scrollDelta}px`,
       };
     },
     _contentStyle() {
-      const { height } = this;
+      const { height: { wrap, content } } = this;
       return {
         ...this.contentStyle,
-        top: `${(-this.scrollDelta * height.content) / height.wrap}px`,
+        top: `${(-this.scrollDelta * content) / wrap}px`,
       };
     },
   },
   methods: {
     getHeight() {
-      if (!this.$refs.wrap) return { wrap: 0, content: 0 };
-      return {
-        wrap: this.$refs.wrap.clientHeight,
-        content: this.$refs.content.clientHeight,
-      };
+      if (this.$refs.wrap) {
+        this.height.wrap = this.$refs.wrap.clientHeight;
+        this.height.content = this.$refs.content.clientHeight;
+      }
     },
     scroll(ev) {
       this.isTop = false;
       this.isBottom = false;
-      const { height } = this;
-      this.setDelta({ delta: ev.dy / height.content * height.wrap });
+      const { height: { wrap, content } } = this;
+      this.setDelta({ delta: ev.dy / content * wrap });
     },
     drag(ev) {
       const e = ev || window.event;
@@ -89,19 +88,21 @@ export default {
         this.begin.showBar = true;
         window.addEventListener('mousemove', this.drag);
         window.addEventListener('mouseup', this.drag);
+        this.$emit('startDrag', this.begin);
       } else if (e.type === 'mousemove') {
         this.setDelta({ value: e.clientY - this.begin.y + this.begin.scrollDelta });
       } else if (e.type === 'mouseup') {
         this.begin.showBar = false;
         window.removeEventListener('mousemove', this.drag);
         window.removeEventListener('mouseup', this.drag);
+        this.$emit('endDrag', { ...this.begin, x: e.clientX, y: e.clientY });
       }
     },
     setDelta({ delta = 0, value = 0 }) {
-      const { height } = this;
+      const { height: { wrap, content } } = this;
       if (delta) this.scrollDelta += delta;
       else if (value) this.scrollDelta = value;
-      const maxTop = height.wrap - height.wrap * height.wrap / height.content;
+      const maxTop = wrap - wrap * wrap / content;
       if (this.scrollDelta > maxTop) {
         this.scrollDelta = maxTop;
         this.isBottom = true;
