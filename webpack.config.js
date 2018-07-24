@@ -12,6 +12,14 @@ const config = {
     libraryTarget: 'umd',
     globalObject: 'this',
   },
+  externals: {
+    '@livelybone/mouse-wheel': {
+      commonjs: '@livelybone/mouse-wheel',
+      commonjs2: '@livelybone/mouse-wheel',
+      amd: '@livelybone/mouse-wheel',
+      root: 'MouseWheel',
+    },
+  },
   module: {
     rules: [
       {
