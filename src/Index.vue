@@ -108,7 +108,7 @@ export default {
       }
     },
     bind() {
-      this.bindRes = MouseWheel.bindMouseWheel(this.$refs.wrap, this.scroll, ({ dy, e }) => {
+      this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e }) => {
         if (!(this.isBottom && dy > 0) && !(this.isTop && dy < 0)) {
           e.preventDefault();
         }

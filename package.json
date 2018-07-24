@@ -1,6 +1,6 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "description": "A vue scrollbar component for PC, surpport SSR.",
   "main": "./lib/index.js",
   "scripts": {
@@ -58,6 +58,6 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "@livelybone/mouse-wheel": "^1.7.0"
+    "@livelybone/mouse-wheel": "^1.9.0"
   }
 }
