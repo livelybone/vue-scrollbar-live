@@ -17,6 +17,9 @@ export default {
   mounted() {
     this.height = this.getHeight();
   },
+  beforeUpdate() {
+    this.height = this.getHeight();
+  },
   props: {
     maxHeight: [Number, String],
     wrapStyle: Object,
