@@ -37,7 +37,15 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['env', 'stage-2'],
+          presets: [
+            ['env', {
+              modules: false,
+              targets: {
+                browsers: ['> 1%', 'last 2 versions', 'not ie <= 8']
+              },
+            }],
+            'stage-2',
+          ],
           env: {
             test: {
               plugins: ['istanbul'],

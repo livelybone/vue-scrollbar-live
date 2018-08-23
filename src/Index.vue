@@ -10,18 +10,20 @@
 </template>
 
 <script>
-import MouseWheel from '@livelybone/mouse-wheel';
+import MouseWheel from '@livelybone/mouse-wheel'
 
 export default {
   name: 'Scrollbar',
   mounted() {
-    this.getHeight();
+    this.getHeight()
+    if (this.scrollTo) this.setDelta({ percent: this.scrollTo })
   },
   updated() {
-    this.getHeight();
+    this.getHeight()
   },
   props: {
     maxHeight: [Number, String],
+    scrollTo: Number,
     wrapStyle: Object,
     contentStyle: Object,
     barStyle: Object,
@@ -34,90 +36,96 @@ export default {
       isBottom: false,
       isTop: true,
       begin: { showBar: false, x: 0, y: 0, scrollDelta: 0 },
-    };
+    }
   },
   computed: {
     wrapHeight() {
-      return typeof this.maxHeight === 'number' ? `${this.maxHeight}px` : this.maxHeight;
+      return typeof this.maxHeight === 'number' ? `${this.maxHeight}px` : this.maxHeight
     },
     showBar() {
-      const { height: { wrap, content } } = this;
-      return content && wrap < content;
+      const { height: { wrap, content } } = this
+      return content && wrap < content
     },
     _wrapStyle() {
-      const maxHeight = this.wrapHeight;
-      return { ...this.wrapStyle, maxHeight };
+      const maxHeight = this.wrapHeight
+      return { ...this.wrapStyle, maxHeight }
     },
     _barStyle() {
-      if (!this.showBar) return null;
-      const { height: { wrap, content } } = this;
+      if (!this.showBar) return null
+      const { height: { wrap, content } } = this
       return {
         ...this.barStyle,
         ...(this.begin.showBar ? { display: 'block' } : {}),
         height: `${(wrap * wrap) / content}px`,
         top: `${this.scrollDelta}px`,
-      };
+      }
     },
     _contentStyle() {
-      const { height: { wrap, content } } = this;
+      const { height: { wrap, content } } = this
       return {
         ...this.contentStyle,
         top: `${(-this.scrollDelta * content) / wrap}px`,
-      };
+      }
+    },
+  },
+  watch: {
+    scrollTo(val) {
+      this.setDelta({ percent: val })
     },
   },
   methods: {
     getHeight() {
       if (this.$refs.wrap) {
-        this.height.wrap = this.$refs.wrap.clientHeight;
-        this.height.content = this.$refs.content.clientHeight;
+        this.height.wrap = this.$refs.wrap.clientHeight
+        this.height.content = this.$refs.content.clientHeight
       }
     },
     scroll(ev) {
-      this.isTop = false;
-      this.isBottom = false;
-      const { height: { wrap, content } } = this;
-      this.setDelta({ delta: ev.dy / content * wrap });
+      this.isTop = false
+      this.isBottom = false
+      const { height: { wrap, content } } = this
+      this.setDelta({ delta: ev.dy / content * wrap })
     },
     drag(ev) {
-      const e = ev || window.event;
+      const e = ev || window.event
       if (e.type === 'mousedown') {
-        this.begin.x = e.clientX;
-        this.begin.y = e.clientY;
-        this.begin.scrollDelta = this.scrollDelta;
-        this.begin.showBar = true;
-        window.addEventListener('mousemove', this.drag);
-        window.addEventListener('mouseup', this.drag);
-        this.$emit('startDrag', this.begin);
+        this.begin.x = e.clientX
+        this.begin.y = e.clientY
+        this.begin.scrollDelta = this.scrollDelta
+        this.begin.showBar = true
+        window.addEventListener('mousemove', this.drag)
+        window.addEventListener('mouseup', this.drag)
+        this.$emit('startDrag', this.begin)
       } else if (e.type === 'mousemove') {
-        this.setDelta({ value: e.clientY - this.begin.y + this.begin.scrollDelta });
+        this.setDelta({ value: e.clientY - this.begin.y + this.begin.scrollDelta })
       } else if (e.type === 'mouseup') {
-        this.begin.showBar = false;
-        window.removeEventListener('mousemove', this.drag);
-        window.removeEventListener('mouseup', this.drag);
-        this.$emit('endDrag', { ...this.begin, x: e.clientX, y: e.clientY });
+        this.begin.showBar = false
+        window.removeEventListener('mousemove', this.drag)
+        window.removeEventListener('mouseup', this.drag)
+        this.$emit('endDrag', { ...this.begin, x: e.clientX, y: e.clientY })
       }
     },
-    setDelta({ delta = 0, value = 0 }) {
-      const { height: { wrap, content } } = this;
-      if (delta) this.scrollDelta += delta;
-      else if (value) this.scrollDelta = value;
-      const maxTop = wrap - wrap * wrap / content;
+    setDelta({ delta = 0, value = 0, percent = 0 }) {
+      const { height: { wrap, content } } = this
+      const maxTop = wrap - wrap * wrap / content
+      if (delta) this.scrollDelta += delta
+      else if (value) this.scrollDelta = value
+      else if (percent) this.scrollDelta = percent * maxTop
       if (this.scrollDelta > maxTop) {
-        this.scrollDelta = maxTop;
-        this.isBottom = true;
+        this.scrollDelta = maxTop
+        this.isBottom = true
       } else if (this.scrollDelta < 0) {
-        this.scrollDelta = 0;
-        this.isTop = true;
+        this.scrollDelta = 0
+        this.isTop = true
       }
     },
     bind() {
       this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e }) => {
         if (!(this.isBottom && dy > 0) && !(this.isTop && dy < 0)) {
-          e.preventDefault();
+          e.preventDefault()
         }
-      });
+      })
     },
   },
-};
+}
 </script>
