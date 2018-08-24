@@ -1,6 +1,5 @@
 # vue-scrollbar-live 
-<img src="https://img.shields.io/badge/vue--scrollbar--live-static-blue.svg">
-<img src="https://img.shields.io/badge/gzip-2.08kb-green.svg">
+<img src="https://img.shields.io/badge/vue--scrollbar--live-static-blue.svg"> <img src="https://img.shields.io/badge/gzip-2.08kb-green.svg">
 
 A vue scrollbar component for PC, surpported SSR.
 
@@ -17,10 +16,10 @@ npm i -D vue-scrollbar-live
 
 ## Register
 ```js
-import Scrollbar from 'vue-srollbar-live';
+import Scrollbar from 'vue-scrollbar-live';
 
 // 引入css
-import 'vue-srollbar-live/lib/css/index.css';
+import 'vue-scrollbar-live/lib/css/index.css';
 
 // Global register
 Vue.component('scrollbar', Scrollbar);
