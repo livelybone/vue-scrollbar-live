@@ -11,7 +11,7 @@ https://github.com/livelybone/vue-scrollbar-live#readme
 
 ## Installation
 ```bash
-npm i -D vue-scrollbar-live
+npm i -S vue-scrollbar-live
 ```
 
 ## Register
