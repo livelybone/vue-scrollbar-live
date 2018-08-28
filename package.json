@@ -1,6 +1,6 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "A vue scrollbar component, support SSR.",
   "main": "./lib/index.js",
   "scripts": {
