@@ -148,11 +148,12 @@ export default {
     bindPan() {
       this.bindRes = Touch.pan(this.$refs.content, (ev) => {
         this.begin.showBar = ev.type !== 'panEnd'
+        const { height: { wrap, content } } = this
         this.scroll({
-          dy: ev.centerDelta && (-ev.centerDelta.deltaY * ev.centerDelta.windowScale) || 0,
+          dy: (ev.centerDelta && -ev.centerDelta.deltaY || 0) / content * wrap,
         })
       }, (ev) => {
-        const dy = ev.centerDelta && (-ev.centerDelta.deltaY * ev.centerDelta.windowScale) || 0
+        const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
         if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
           ev.event.preventDefault()
         }
