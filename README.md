@@ -33,6 +33,7 @@ new Vue({
 ## Props
 | Name          | Type                                      | DefaultValue         | Description  |
 | ------------- | ----------------------------------------- | -------------------- | ------------ |
+| `isMobile`    | `Boolean`                                 | `false`              | Mark the device that component be used |
 | `maxHeight`   | `[String, Number]`                        | none                 | Used to set style max-height of the wrap `.scrollbar-wrap`.$/ |
 | `scrollTo`    | `Number`                                  | `0`                  | Used to set scroll y of the content wrap `.scrollbar-content`. value: `0 ~ 1`$/ |
 | `wrapStyle`   | `Object`                                  | none                 | Used to set the style of the wrap `.scrollbar-wrap`. |

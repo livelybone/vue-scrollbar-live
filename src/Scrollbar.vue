@@ -37,12 +37,12 @@ export default {
     else this.bindRes()
   },
   props: {
+    isMobile: Boolean,
     maxHeight: [Number, String],
     scrollTo: Number,
     wrapStyle: Object,
     contentStyle: Object,
     barStyle: Object,
-    isMobile: Boolean,
   },
   data() {
     return {
