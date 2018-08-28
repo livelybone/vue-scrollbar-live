@@ -1,7 +1,7 @@
 # vue-scrollbar-live 
-<img src="https://img.shields.io/badge/vue--scrollbar--live-static-blue.svg"> <img src="https://img.shields.io/badge/gzip-2.08kb-green.svg">
+<img src="https://img.shields.io/badge/vue--scrollbar--live-static-blue.svg"> <img src="https://img.shields.io/badge/gzip-3kb-green.svg"> <img src="https://img.shields.io/badge/build-passing-green.svg">
 
-A vue scrollbar component for PC, surpported SSR.
+A vue scrollbar component, supports SSR.
 
 ## repository
 https://github.com/livelybone/vue-scrollbar-live.git

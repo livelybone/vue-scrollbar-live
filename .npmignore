@@ -18,6 +18,7 @@ webpack.*.js
 /index.js
 
 test/
+examples/
 coverage/
 /karma.conf.js
 /.eslintrc.js

@@ -1,7 +1,7 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "2.3.0",
-  "description": "A vue scrollbar component for PC, surpport SSR.",
+  "version": "2.4.0",
+  "description": "A vue scrollbar component, support SSR.",
   "main": "./lib/index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --progress --mode production",
@@ -16,7 +16,8 @@
     "vue",
     "scrollbar",
     "PC",
-    "small size",
+    "mobile",
+    "small size (3kb)",
     "SSR"
   ],
   "author": "livelybone",
@@ -58,6 +59,7 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "@livelybone/mouse-wheel": "^2.0.0"
+    "@livelybone/mouse-wheel": "^2.0.0",
+    "@livelybone/touch": "^1.2.2"
   }
 }

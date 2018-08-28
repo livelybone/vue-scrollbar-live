@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue-scrollbar-live</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="../node_modules/@livelybone/mouse-wheel/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/meta-scale/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/simple-observer/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/touch/lib/index.js"></script>
+  <script src="../lib/index.js"></script>
+  <link rel="stylesheet" href="../lib/css/index.css">
+  <style>
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
+</head>
+<body style="height: 200vh">
+<div id="datetime-picker"></div>
+
+<script type="text/javascript">
+console.log(VueScrollBar)
+new Vue({
+  el: '#datetime-picker',
+  template: '<scrollbar :maxHeight="\'100vh\'" :isMobile="isMobile" style="width: 100vw;height:100vh"><div style="height:200vh;background:linear-gradient(to bottom, #333, #eee)"></div></scrollbar>',
+  data: function () {
+    return {
+      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent)
+    }
+  },
+  methods: {},
+  components: { 'scrollbar': VueScrollBar.default }
+})
+</script>
+</body>
+</html>

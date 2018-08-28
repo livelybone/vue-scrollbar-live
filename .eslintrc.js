@@ -20,5 +20,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'camelcase': 'off',
     'no-mixed-operators':'off',
+    'semi':'off',
   },
 };

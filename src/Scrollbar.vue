@@ -1,6 +1,6 @@
 <template>
   <div class="scrollbar-wrap" :style="_wrapStyle" @click.stop="$emit('wrapClick', $event)"
-       @mouseover="bind" @mouseout="bindRes&&bindRes()" ref="wrap">
+       ref="wrap">
     <div class="scrollbar-content" :style="_contentStyle" ref="content">
       <slot/>
     </div>
@@ -11,15 +11,30 @@
 
 <script>
 import MouseWheel from '@livelybone/mouse-wheel'
+import Touch from '@livelybone/touch'
 
+const eventTypes = {
+  start: { pc: 'mousedown', mobile: 'touchstart' },
+  move: { pc: 'mousemove', mobile: 'touchmove' },
+  end: { pc: 'mouseup', mobile: 'touchend' },
+}
 export default {
   name: 'Scrollbar',
   mounted() {
     this.getHeight()
     if (this.scrollTo) this.setDelta({ percent: this.scrollTo })
+    if (this.isMobile) {
+      this.bindPan()
+    } else {
+      this.bind()
+    }
   },
   updated() {
     this.getHeight()
+  },
+  beforeDestroy() {
+    if (this.isMobile) this.bindRes.touchObserver.destory()
+    else this.bindRes()
   },
   props: {
     maxHeight: [Number, String],
@@ -27,6 +42,7 @@ export default {
     wrapStyle: Object,
     contentStyle: Object,
     barStyle: Object,
+    isMobile: Boolean,
   },
   data() {
     return {
@@ -39,6 +55,9 @@ export default {
     }
   },
   computed: {
+    eventTypeKey() {
+      return this.isMobile ? 'mobile' : 'pc'
+    },
     wrapHeight() {
       return typeof this.maxHeight === 'number' ? `${this.maxHeight}px` : this.maxHeight
     },
@@ -88,20 +107,20 @@ export default {
     },
     drag(ev) {
       const e = ev || window.event
-      if (e.type === 'mousedown') {
+      if (e.type === eventTypes.start[this.eventTypeKey]) {
         this.begin.x = e.clientX
         this.begin.y = e.clientY
         this.begin.scrollDelta = this.scrollDelta
         this.begin.showBar = true
-        window.addEventListener('mousemove', this.drag)
-        window.addEventListener('mouseup', this.drag)
+        window.addEventListener(eventTypes.move[this.eventTypeKey], this.drag)
+        window.addEventListener(eventTypes.end[this.eventTypeKey], this.drag)
         this.$emit('startDrag', this.begin)
-      } else if (e.type === 'mousemove') {
+      } else if (e.type === eventTypes.move[this.eventTypeKey]) {
         this.setDelta({ value: e.clientY - this.begin.y + this.begin.scrollDelta })
-      } else if (e.type === 'mouseup') {
+      } else if (e.type === eventTypes.end[this.eventTypeKey]) {
         this.begin.showBar = false
-        window.removeEventListener('mousemove', this.drag)
-        window.removeEventListener('mouseup', this.drag)
+        window.removeEventListener(eventTypes.move[this.eventTypeKey], this.drag)
+        window.removeEventListener(eventTypes.end[this.eventTypeKey], this.drag)
         this.$emit('endDrag', { ...this.begin, x: e.clientX, y: e.clientY })
       }
     },
@@ -121,8 +140,19 @@ export default {
     },
     bind() {
       this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e }) => {
-        if (!(this.isBottom && dy > 0) && !(this.isTop && dy < 0)) {
+        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
           e.preventDefault()
+        }
+      })
+    },
+    bindPan() {
+      this.bindRes = Touch.pan(this.$refs.content, (ev) => {
+        this.begin.showBar = ev.type !== 'panEnd'
+        this.scroll({ dy: ev.centerDelta && -ev.centerDelta.deltaY || 0 })
+      }, (ev) => {
+        const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
+        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
+          ev.event.preventDefault()
         }
       })
     },

@@ -1,13 +1,13 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path')
 
 const config = {
   mode: 'production',
-  entry: { index: './src/Index.vue' },
+  entry: { index: './src/Scrollbar.vue' },
   output: {
     path: path.resolve(__dirname, './lib'),
-    filename: './[name].js',
+    filename: './index.js',
     library: 'VueScrollBar',
     libraryTarget: 'umd',
     globalObject: 'this',
@@ -18,6 +18,12 @@ const config = {
       commonjs2: '@livelybone/mouse-wheel',
       amd: '@livelybone/mouse-wheel',
       root: 'MouseWheel',
+    },
+    '@livelybone/touch': {
+      commonjs: '@livelybone/touch',
+      commonjs2: '@livelybone/touch',
+      amd: '@livelybone/touch',
+      root: 'Touch',
     },
   },
   module: {
@@ -66,6 +72,6 @@ const config = {
       },
     ]),
   ],
-};
+}
 
-module.exports = config;
+module.exports = config
