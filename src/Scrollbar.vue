@@ -33,7 +33,7 @@ export default {
     this.getHeight()
   },
   beforeDestroy() {
-    if (this.isMobile) this.bindRes.touchObserver.destory()
+    if (this.isMobile) this.bindRes.touchObserver.destroy()
     else this.bindRes()
   },
   props: {
@@ -148,9 +148,11 @@ export default {
     bindPan() {
       this.bindRes = Touch.pan(this.$refs.content, (ev) => {
         this.begin.showBar = ev.type !== 'panEnd'
-        this.scroll({ dy: ev.centerDelta && -ev.centerDelta.deltaY || 0 })
+        this.scroll({
+          dy: ev.centerDelta && (-ev.centerDelta.deltaY * ev.centerDelta.windowScale) || 0,
+        })
       }, (ev) => {
-        const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
+        const dy = ev.centerDelta && (-ev.centerDelta.deltaY * ev.centerDelta.windowScale) || 0
         if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
           ev.event.preventDefault()
         }
