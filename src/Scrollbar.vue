@@ -146,7 +146,7 @@ export default {
       })
     },
     bindPan() {
-      this.bindRes = Touch.pan(this.$refs.content, (ev) => {
+      this.bindRes = Touch.pan(this.$refs.wrap, (ev) => {
         this.begin.showBar = ev.type !== 'panEnd'
         const { height: { wrap, content } } = this
         this.scroll({
@@ -154,7 +154,7 @@ export default {
         })
       }, (ev) => {
         const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
-        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
+        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0) && ev.type === 'panMove') {
           ev.event.preventDefault()
         }
       })

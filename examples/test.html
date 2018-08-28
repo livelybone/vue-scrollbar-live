@@ -24,13 +24,17 @@
 console.log(VueScrollBar)
 new Vue({
   el: '#datetime-picker',
-  template: '<scrollbar :maxHeight="\'100vh\'" :isMobile="isMobile" style="width: 100vw;height:100vh"><div style="height:200vh;background:linear-gradient(to bottom, #333, #eee)"></div></scrollbar>',
+  template: '<scrollbar :maxHeight="\'100vh\'" :isMobile="isMobile" style="width: 100vw;height:100vh"><div style="height:200vh;background:linear-gradient(to bottom, #333, #eee)" @click="log"></div></scrollbar>',
   data: function () {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent)
     }
   },
-  methods: {},
+  methods: {
+    log: function (e) {
+      console.log(e)
+    }
+  },
   components: { 'scrollbar': VueScrollBar.default }
 })
 </script>
