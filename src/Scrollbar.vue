@@ -103,7 +103,11 @@ export default {
       this.isTop = false
       this.isBottom = false
       const { height: { wrap, content } } = this
-      this.setDelta({ delta: ev.dy / content * wrap })
+      if (ev.dy) {
+        this.setDelta({ delta: ev.dy / content * wrap })
+      } else if (ev.deltaY) {
+        this.setDelta({ value: (ev.deltaY / content * wrap) + this.begin.scrollDelta })
+      }
     },
     drag(ev) {
       const e = ev || window.event
@@ -147,10 +151,10 @@ export default {
     },
     bindPan() {
       this.bindRes = Touch.pan(this.$refs.wrap, (ev) => {
+        if (ev.type === 'panStart') this.begin.scrollDelta = this.scrollDelta
         this.begin.showBar = ev.type !== 'panEnd'
-        const { height: { wrap, content } } = this
         this.scroll({
-          dy: (ev.centerDelta && -ev.centerDelta.deltaY || 0) / content * wrap,
+          deltaY: ev.centerDelta && -ev.centerDelta.deltaY || 0,
         })
       }, (ev) => {
         const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0

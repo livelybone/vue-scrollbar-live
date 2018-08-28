@@ -1,6 +1,6 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "A vue scrollbar component, support SSR.",
   "main": "./lib/index.js",
   "scripts": {
@@ -60,6 +60,6 @@
   },
   "dependencies": {
     "@livelybone/mouse-wheel": "^2.0.1",
-    "@livelybone/touch": "^1.2.2"
+    "@livelybone/touch": "^1.3.0"
   }
 }
