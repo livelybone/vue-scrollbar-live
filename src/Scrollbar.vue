@@ -130,7 +130,7 @@ export default {
     },
     setDelta({ delta = 0, value = 0, percent = 0 }) {
       const { height: { wrap, content } } = this
-      const maxTop = wrap - wrap * wrap / content
+      const maxTop = wrap - content >= 0 ? 0 : wrap - wrap * wrap / content
       if (delta) this.scrollDelta += delta
       else if (value) this.scrollDelta = value
       else if (percent) this.scrollDelta = percent * maxTop
@@ -158,7 +158,7 @@ export default {
         })
       }, (ev) => {
         const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
-        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0) && ev.type === 'panMove') {
+        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0) && ev.type === 'touchmove') {
           ev.event.preventDefault()
         }
       })
