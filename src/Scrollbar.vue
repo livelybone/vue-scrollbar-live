@@ -52,6 +52,7 @@ export default {
       isBottom: false,
       isTop: true,
       begin: { showBar: false, x: 0, y: 0, scrollDelta: 0 },
+      prevent: null,
     }
   },
   computed: {
@@ -86,6 +87,10 @@ export default {
         top: `${(-this.scrollDelta * content) / wrap}px`,
       }
     },
+    maxTop() {
+      const { height: { wrap, content } } = this
+      return wrap - content >= 0 ? 0 : wrap - wrap * wrap / content
+    },
   },
   watch: {
     scrollTo(val) {
@@ -100,13 +105,15 @@ export default {
       }
     },
     scroll(ev) {
-      this.isTop = false
-      this.isBottom = false
       const { height: { wrap, content } } = this
       if (ev.dy) {
         this.setDelta({ delta: ev.dy / content * wrap })
       } else if (ev.deltaY) {
         this.setDelta({ value: (ev.deltaY / content * wrap) + this.begin.scrollDelta })
+      }
+      if (ev.type.indexOf('End') > 0) {
+        this.isBottom = this.scrollDelta >= this.maxTop
+        this.isTop = this.scrollDelta <= 0
       }
     },
     drag(ev) {
@@ -129,37 +136,47 @@ export default {
       }
     },
     setDelta({ delta = 0, value = 0, percent = 0 }) {
-      const { height: { wrap, content } } = this
-      const maxTop = wrap - content >= 0 ? 0 : wrap - wrap * wrap / content
       if (delta) this.scrollDelta += delta
       else if (value) this.scrollDelta = value
-      else if (percent) this.scrollDelta = percent * maxTop
-      if (this.scrollDelta > maxTop) {
-        this.scrollDelta = maxTop
-        this.isBottom = true
+      else if (percent) this.scrollDelta = percent * this.maxTop
+      if (this.scrollDelta > this.maxTop) {
+        this.scrollDelta = this.maxTop
       } else if (this.scrollDelta < 0) {
         this.scrollDelta = 0
-        this.isTop = true
       }
     },
     bind() {
-      this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e }) => {
-        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0)) {
+      this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e, type }) => {
+        if (type === 'wheelStart') {
+          this.prevent = !((this.isBottom && dy >= 0) || (this.isTop && dy <= 0))
+        }
+        if (this.prevent) {
           e.preventDefault()
+        }
+        if (type === 'wheelEnd') {
+          this.prevent = null
         }
       })
     },
     bindPan() {
+      const deltaYFn = ev => ev.centerDelta && -ev.centerDelta.deltaY || 0
       this.bindRes = Touch.pan(this.$refs.wrap, (ev) => {
         if (ev.type === 'panStart') this.begin.scrollDelta = this.scrollDelta
         this.begin.showBar = ev.type !== 'panEnd'
         this.scroll({
-          deltaY: ev.centerDelta && -ev.centerDelta.deltaY || 0,
+          deltaY: deltaYFn(ev),
+          type: ev.type,
         })
       }, (ev) => {
-        const dy = ev.centerDelta && -ev.centerDelta.deltaY || 0
-        if (!(this.isBottom && dy >= 0) && !(this.isTop && dy <= 0) && ev.type === 'touchmove') {
+        if (ev.type === 'touchmove' && this.prevent === null) {
+          const dy = deltaYFn(ev)
+          this.prevent = !((this.isBottom && dy >= 0) || (this.isTop && dy <= 0))
+        }
+        if (this.prevent) {
           ev.event.preventDefault()
+        }
+        if (ev.type === 'touchend') {
+          this.prevent = null
         }
       })
     },
