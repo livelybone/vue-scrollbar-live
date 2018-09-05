@@ -11,11 +11,7 @@ const conf = entry => Object.assign({}, baseConf, {
     name: 'VueScrollBar',
   })),
   external: ['@livelybone/mouse-wheel', '@livelybone/touch'],
-  plugins: Object.assign(
-    [],
-    baseConf.plugins,
-    [(entry.needUglify !== false && uglify())],
-  ),
+  plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
 })
 
 export default [
