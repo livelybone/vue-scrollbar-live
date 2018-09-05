@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <title>vue-scrollbar-live</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="../node_modules/@livelybone/mouse-wheel/lib/index.js"></script>
-  <script src="../node_modules/@livelybone/meta-scale/lib/index.js"></script>
-  <script src="../node_modules/@livelybone/simple-observer/lib/index.js"></script>
-  <script src="../node_modules/@livelybone/touch/lib/index.js"></script>
-  <script src="../lib/index.js"></script>
+  <script src="../node_modules/@livelybone/mouse-wheel/lib/umd/index.js"></script>
+  <script src="../node_modules/@livelybone/meta-scale/lib/umd/index.js"></script>
+  <script src="../node_modules/@livelybone/simple-observer/lib/umd/index.js"></script>
+  <script src="../node_modules/@livelybone/touch/lib/umd/index.js"></script>
+  <script src="../lib/umd/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
   <style>
   body {
@@ -35,7 +35,7 @@ new Vue({
       console.log(e)
     }
   },
-  components: { 'scrollbar': VueScrollBar.default }
+  components: { 'scrollbar': VueScrollBar }
 })
 </script>
 </body>
