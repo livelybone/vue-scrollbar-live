@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import MouseWheel from '@livelybone/mouse-wheel'
-import Touch from '@livelybone/touch'
+import * as MouseWheel from '@livelybone/mouse-wheel'
+import * as Touch from '@livelybone/touch'
 
 const eventTypes = {
   start: { pc: 'mousedown', mobile: 'touchstart' },
