@@ -8,7 +8,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, './lib'),
     filename: './index.js',
-    library: 'VueScrollBar',
+    library: 'VueScrollbar',
     libraryTarget: 'umd',
     globalObject: 'this',
   },

@@ -16,17 +16,17 @@ npm i -S vue-scrollbar-live
 
 ## Register
 ```js
-import Scrollbar from 'vue-scrollbar-live';
+import VueScrollbar from 'vue-scrollbar-live';
 
 // 引入css
 import 'vue-scrollbar-live/lib/css/index.css';
 
 // Global register
-Vue.component('scrollbar', Scrollbar);
+Vue.component('scrollbar', VueScrollbar);
 
 // Local register
 new Vue({
-  components:{Scrollbar}
+  components:{VueScrollbar}
 })
 ```
 

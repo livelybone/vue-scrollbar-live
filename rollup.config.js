@@ -8,7 +8,7 @@ const conf = entry => Object.assign({}, baseConf, {
   output: entry.formats.map(format => ({
     file: `./lib/${format}/${entry.name}.js`,
     format,
-    name: 'VueScrollBar',
+    name: 'VueScrollbar',
   })),
   external: ['@livelybone/mouse-wheel', '@livelybone/touch'],
   plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
