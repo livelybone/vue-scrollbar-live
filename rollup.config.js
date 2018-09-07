@@ -10,11 +10,17 @@ const conf = entry => Object.assign({}, baseConf, {
     format,
     name: 'VueScrollbar',
   })),
-  external: ['@livelybone/mouse-wheel', '@livelybone/touch'],
+  external: entry.external ? ['@livelybone/mouse-wheel', '@livelybone/touch'] : [],
   plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
 })
 
 export default [
-  { name: 'index', filename: './src/Scrollbar.vue', formats: ['es'], needUglify: false },
+  {
+    name: 'index',
+    filename: './src/Scrollbar.vue',
+    formats: ['es'],
+    needUglify: false,
+    external: true,
+  },
   { name: 'index', filename: './src/Scrollbar.vue', formats: ['umd'] },
 ].map(conf)
