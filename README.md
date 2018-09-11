@@ -1,6 +1,6 @@
 # vue-scrollbar-live 
 ![static](https://img.shields.io/badge/vue--scrollbar--live-static-blue.svg "static")
-![gzip: 2kb](https://img.shields.io/badge/gzip-2kb-green.svg "gzip: 2kb")
+![gzip: 3.2kb](https://img.shields.io/badge/gzip-3.2kb-green.svg "gzip: 3.2kb")
 ![mobile supported](https://img.shields.io/badge/mobile-supported-green.svg "mobile supported")
 
 A vue scrollbar component, supports SSR.
