@@ -46,8 +46,10 @@ new Vue({
 | Name                  | EmittedData           | Description                                       |
 | --------------------- | --------------------- | ------------------------------------------------- |
 | `wrapClick`           | `event`               | `click` event of the wrap                         |
-| `startDrag`           | `Object`              | `mousedown` event of the scrollbar                |
-| `endDrag`             | `Object`              | `mouseup` event of the scrollbar                  | 
+| `reachBottom`         | none                  | Triggered when the scrollbar reach the bottom     |
+| `reachTop`            | none                  | Triggered when the scrollbar reach the top        |
+| `startDrag`           | `Object`              | Drag start event of the scrollbar                 |
+| `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
 
 ## Rewrite style
 You can rewrite the style. the css file content maybe like:

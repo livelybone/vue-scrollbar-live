@@ -96,6 +96,16 @@ export default {
     scrollTo(val) {
       this.setDelta({ percent: val })
     },
+    isBottom(val) {
+      if (val) {
+        this.$emit('reachBottom')
+      }
+    },
+    isTop(val) {
+      if (val) {
+        this.$emit('reachTop')
+      }
+    },
   },
   methods: {
     getHeight() {
