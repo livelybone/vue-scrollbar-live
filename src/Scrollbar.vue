@@ -111,7 +111,7 @@ export default {
     getHeight() {
       if (this.$refs.wrap) {
         this.height.wrap = this.$refs.wrap.clientHeight
-        this.height.content = this.$refs.content.clientHeight
+        this.height.content = this.$refs.content.offsetHeight
       }
     },
     scroll(ev) {
