@@ -74,3 +74,11 @@ You can rewrite the style. the css file content maybe like:
     }
   }
 ```
+
+## Attention for application
+If you put the component at a div that is `display:none`, the component may be will not work
+
+There are two solutions:
+
+1. Set `opacity: 0; pointer-events: none;` instead of `display: none`
+2. Use `v-if` instead of set `display: none`
