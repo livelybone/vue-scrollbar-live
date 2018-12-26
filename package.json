@@ -1,6 +1,6 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "A vue scrollbar component, support SSR.",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -24,12 +24,12 @@
     "small size (2kb)",
     "SSR"
   ],
-  "author": "livelybone",
+  "author": "livelybone(2631541504@qq.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/livelybone/vue-scrollbar-live/issues"
   },
-  "homepage": "https://github.com/livelybone/vue-scrollbar-live#readme",
+  "homepage": "https://livelybone.github.io/vue/vue-scrollbar-live",
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.21",
     "babel-core": "^6.26.3",
@@ -60,6 +60,7 @@
     "rollup": "^0.65.0",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.6",
+    "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-uglify": "^5.0.2",
     "rollup-plugin-vue": "^4.3.2",

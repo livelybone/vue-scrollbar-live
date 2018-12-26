@@ -9,7 +9,7 @@ A vue scrollbar component, supports SSR.
 https://github.com/livelybone/vue-scrollbar-live.git
 
 ## Demo
-https://github.com/livelybone/vue-scrollbar-live#readme
+https://livelybone.github.io/vue/vue-scrollbar-live
 
 ## Installation
 ```bash
