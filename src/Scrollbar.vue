@@ -2,7 +2,7 @@
   <div class="scrollbar-wrap" :style="_wrapStyle" @click.stop="$emit('wrapClick', $event)"
        ref="wrap">
     <div class="scrollbar-content" :style="_contentStyle" ref="content">
-      <slot/>
+      <slot />
     </div>
     <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle"
          @mousedown.stop="drag"></div>
@@ -33,8 +33,7 @@ export default {
     this.getHeight()
   },
   beforeDestroy() {
-    if (this.isMobile) this.bindRes.touchObserver.destroy()
-    else this.bindRes()
+    if (this.bindRes) this.bindRes()
   },
   props: {
     isMobile: Boolean,
