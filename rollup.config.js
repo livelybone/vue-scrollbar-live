@@ -3,14 +3,20 @@ import { uglify } from 'rollup-plugin-uglify'
 
 const baseConf = require('./rollup.config.base')
 
+const globals = {
+  '@livelybone/mouse-wheel': 'MouseWheel',
+  '@livelybone/touch': 'Touch',
+}
+
 const conf = entry => Object.assign({}, baseConf, {
   input: entry.filename,
   output: entry.formats.map(format => ({
     file: `./lib/${format}/${entry.name}.js`,
     format,
     name: 'VueScrollbar',
+    globals,
   })),
-  external: entry.external ? ['@livelybone/mouse-wheel', '@livelybone/touch'] : [],
+  external: entry.external ? Object.keys(globals) : [],
   plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
 })
 

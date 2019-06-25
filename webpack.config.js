@@ -12,20 +12,6 @@ const config = {
     libraryTarget: 'umd',
     globalObject: 'this',
   },
-  externals: {
-    '@livelybone/mouse-wheel': {
-      commonjs: '@livelybone/mouse-wheel',
-      commonjs2: '@livelybone/mouse-wheel',
-      amd: '@livelybone/mouse-wheel',
-      root: 'MouseWheel',
-    },
-    '@livelybone/touch': {
-      commonjs: '@livelybone/touch',
-      commonjs2: '@livelybone/touch',
-      amd: '@livelybone/touch',
-      root: 'Touch',
-    },
-  },
   module: {
     rules: [
       {
@@ -47,7 +33,7 @@ const config = {
             ['env', {
               modules: false,
               targets: {
-                browsers: ['> 1%', 'last 2 versions', 'not ie <= 8']
+                browsers: ['> 1%', 'last 2 versions', 'not ie <= 8'],
               },
             }],
             'stage-2',

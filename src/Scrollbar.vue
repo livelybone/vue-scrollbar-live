@@ -1,17 +1,26 @@
 <template>
-  <div class="scrollbar-wrap" :style="_wrapStyle" @click.stop="$emit('wrapClick', $event)"
-       ref="wrap">
+  <div
+      class="scrollbar-wrap"
+      :style="_wrapStyle"
+      @click="$emit('wrapClick', $event)"
+      ref="wrap"
+  >
     <div class="scrollbar-content" :style="_contentStyle" ref="content">
       <slot />
     </div>
-    <div v-if="showBar" class="scrollbar" :draggable="false" :style="_barStyle"
-         @mousedown.stop="drag"></div>
+    <div
+        v-if="showBar"
+        class="scrollbar"
+        :draggable="false"
+        :style="_barStyle"
+        @mousedown.stop="drag"
+    ></div>
   </div>
 </template>
 
 <script>
-import * as MouseWheel from '@livelybone/mouse-wheel'
-import * as Touch from '@livelybone/touch'
+import { bind } from '@livelybone/mouse-wheel'
+import { pan } from '@livelybone/touch'
 
 const eventTypes = {
   start: { pc: 'mousedown', mobile: 'touchstart' },
@@ -155,7 +164,7 @@ export default {
       }
     },
     bind() {
-      this.bindRes = MouseWheel.bind(this.$refs.wrap, this.scroll, ({ dy, e, type }) => {
+      this.bindRes = bind(this.$refs.wrap, this.scroll, ({ dy, e, type }) => {
         if (type === 'wheelStart') {
           this.prevent = !((this.isBottom && dy >= 0) || (this.isTop && dy <= 0))
         }
@@ -169,7 +178,7 @@ export default {
     },
     bindPan() {
       const deltaYFn = ev => ev.centerDelta && -ev.centerDelta.deltaY || 0
-      this.bindRes = Touch.pan(this.$refs.wrap, (ev) => {
+      this.bindRes = pan(this.$refs.wrap, (ev) => {
         if (ev.type === 'panStart') this.begin.scrollDelta = this.scrollDelta
         this.begin.showBar = ev.type !== 'panEnd'
         this.scroll({
