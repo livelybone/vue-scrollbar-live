@@ -1,0 +1,36 @@
+$scrollbar-width: 8px;
+
+.scrollbar-wrap {
+  position: relative !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.scrollbar-content {
+}
+
+.scrollbar {
+  position: absolute;
+  border-radius: $scrollbar-width / 2;
+  background: #eee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  cursor: default !important;
+  user-select: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrollbar-y {
+  right: 4px;
+  width: $scrollbar-width;
+}
+
+.scrollbar-x {
+  bottom: 4px;
+  height: $scrollbar-width;
+}
+
+.scrollbar-wrap:hover .scrollbar {
+  opacity: 1;
+  pointer-events: initial;
+}
