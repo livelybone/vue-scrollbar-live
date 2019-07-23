@@ -10,7 +10,6 @@
     </div>
     <Bar
       v-for="(scrollType, type) in scrollbars"
-      :style="barStyle"
       :type="type"
       :marginToWrap="marginToWrap"
       :parentScroll="scrollPos[scrollType]"
@@ -32,14 +31,11 @@ export default {
   components: { Bar },
   props: {
     maxHeight: [Number, String],
-    scrollTo: Number,
+    scrollTo: [Number, Object],
     marginToWrap: {
       default: 5,
       type: Number,
     },
-    wrapStyle: Object,
-    contentStyle: Object,
-    barStyle: Object,
   },
   data() {
     return {
@@ -72,7 +68,6 @@ export default {
     },
     $_wrapStyle() {
       return {
-        ...this.wrapStyle,
         height: this.$_useNativeScrollbar ? 'auto' : `${this.height.wrap}px`,
         maxHeight: this.$_maxHeight,
         overflow: 'hidden',
@@ -81,14 +76,12 @@ export default {
     $_contentStyle() {
       if (this.$_useNativeScrollbar) {
         return {
-          ...this.contentStyle,
           maxHeight: this.$_maxHeight,
           overflow: 'scroll',
         }
       }
       const scrollbarWidth = this.nativeScrollbarWidth
       return {
-        ...this.contentStyle,
         width: `calc(100% + ${scrollbarWidth.horizontal}px)`,
         maxHeight: `calc(${this.$_maxHeight} + ${scrollbarWidth.vertical}px)`,
         overflow: 'scroll',

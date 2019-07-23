@@ -1,13 +1,15 @@
 # vue-scrollbar-live
 [![NPM Version](http://img.shields.io/npm/v/vue-scrollbar-live.svg?style=flat-square)](https://www.npmjs.com/package/vue-scrollbar-live)
 [![Download Month](http://img.shields.io/npm/dm/vue-scrollbar-live.svg?style=flat-square)](https://www.npmjs.com/package/vue-scrollbar-live)
-![gzip with dependencies: kb](https://img.shields.io/badge/gzip--with--dependencies-kb-brightgreen.svg "gzip with dependencies: kb")
+![gzip with dependencies: 3.8kb](https://img.shields.io/badge/gzip--with--dependencies-3.8kb-brightgreen.svg "gzip with dependencies: 3.8kb")
 ![typescript](https://img.shields.io/badge/typescript-supported-blue.svg "typescript")
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 
 > `pkg.module supported`, which means that you can apply tree-shaking in you project
 
 A vue scrollbar component, support SSR.
+
+If your the width of native scrollbar in your browser is 0, this component use the native
 
 ## repository
 https://github.com/livelybone/vue-scrollbar-live.git
@@ -58,9 +60,6 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/vue-scrollb
 | `isMobile`    | `Boolean`                                 | `false`              | Mark the device that component be used |
 | `maxHeight`   | `[String, Number]`                        | none                 | Used to set style max-height of the wrap `.scrollbar-wrap`.$/ |
 | `scrollTo`    | `Number`                                  | `0`                  | Used to set scroll y of the content wrap `.scrollbar-content`. value: `0 ~ 1`$/ |
-| `wrapStyle`   | `Object`                                  | none                 | Used to set the style of the wrap `.scrollbar-wrap`. |
-| `contentStyle`| `Object`                                  | none                 | Used to set the style of the content wrap `.scrollbar-content`. |
-| `barStyle`    | `Object`                                  | none                 | Used to set the style of the bar `.scrollbar`. |
 
 ## Events
 | Name                  | EmittedData           | Description                                       |
@@ -68,6 +67,8 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/vue-scrollb
 | `wrapClick`           | `event`               | `click` event of the wrap                         |
 | `reachBottom`         | none                  | Triggered when the scrollbar reach the bottom     |
 | `reachTop`            | none                  | Triggered when the scrollbar reach the top        |
+| `reachLeft`           | none                  | Triggered when the scrollbar reach the left       |
+| `reachRight`          | none                  | Triggered when the scrollbar reach the right      |
 | `startDrag`           | `Object`              | Drag start event of the scrollbar                 |
 | `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
 

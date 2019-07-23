@@ -37,7 +37,6 @@
   "homepage": "https://github.com/livelybone/vue-scrollbar-live#readme",
   "devDependencies": {
     "@babel/core": "^7.5.0",
-    "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-typescript": "^7.3.3",
