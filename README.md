@@ -55,11 +55,13 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/vue-scrollb
 ```
 
 ## Props
-| Name          | Type                                      | DefaultValue         | Description  |
-| ------------- | ----------------------------------------- | -------------------- | ------------ |
-| `isMobile`    | `Boolean`                                 | `false`              | Mark the device that component be used |
-| `maxHeight`   | `[String, Number]`                        | none                 | Used to set style max-height of the wrap `.scrollbar-wrap`.$/ |
-| `scrollTo`    | `Number`                                  | `0`                  | Used to set scroll y of the content wrap `.scrollbar-content`. value: `0 ~ 1`$/ |
+See in [index.d.ts](./index.d.ts)
+| Name            | Type                                      | DefaultValue         | Description  |
+| -------------   | ----------------------------------------- | -------------------- | ------------ |
+| `isMobile`      | `Boolean`                                 | `false`              | Mark the device that component be used |
+| `maxHeight`     | `[String, Number]`                        | none                 | Used to set style max-height of the wrap `.scrollbar-wrap`.$/ |
+| `scrollTo`      | `[Number, Object]`                        | `0`                  | Used to set scroll y of the content wrap `.scrollbar-content`. value: `0 ~ 1`$/ |
+| `marginToWrap`  | `Number`                                  | `0`                  | Used to set scroll y of the content wrap `.scrollbar-content`. value: `0 ~ 1`$/ |
 
 ## Events
 | Name                  | EmittedData           | Description                                       |
@@ -77,7 +79,6 @@ Since 5.0.0， you don't need to import the css file in your project
 
 For rewrite style, you can copy the `index.scss` or `index.css` file, rewrite it use `!important`(this is necessary), and the import the file in your project
 
-// TODO
 ## Attention for application
 If you put the component at a div that is `display:none`, the component may be will not work
 
