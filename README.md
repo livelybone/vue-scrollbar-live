@@ -9,7 +9,7 @@
 
 A vue scrollbar component, support SSR.
 
-If your the width of native scrollbar in your browser is 0, this component use the native
+How it works: Set the width of native scrollbar hidden -> append custom bar element to the wrap element
 
 ## repository
 https://github.com/livelybone/vue-scrollbar-live.git

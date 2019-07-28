@@ -86,7 +86,7 @@ export default {
       return {
         width: `calc(100% + ${y}px) !important`,
         maxHeight: `calc(${this.$_maxHeight} + ${x}px) !important`,
-        overflow: 'scroll !important',
+        overflow: 'scroll',
       }
     },
     maxScroll() {
@@ -185,13 +185,14 @@ export default {
       )
     },
     insertStyle() {
-      const id = 'scroll-bar'
+      const id = 'vue-scrollbar-live-module-style'
       const styleExist = document.getElementById(id)
       if (!styleExist) {
         const style = document.createElement('style')
         style.id = id
         style.innerText =
-          '.scrollbar-content::-webkit-scrollbar{width:0;height:0;}' +
+          '.scrollbar-content::scrollbar{width:0;height:0;}' +
+          '.scrollbar-content{-ms-overflow-style:none;scrollbar-width:none;}' +
           '.scrollbar{position:absolute;border-radius:.25em;background:#eee;box-shadow:0 0 2px rgba(0,0,0,0.1);opacity:0;pointer-events:none}' +
           '.scrollbar-y{right:0.25em;width:.5em}' +
           '.scrollbar-x{bottom:0.25em;height:.5em}' +
