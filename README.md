@@ -1,7 +1,7 @@
 # vue-scrollbar-live
 [![NPM Version](http://img.shields.io/npm/v/vue-scrollbar-live.svg?style=flat-square)](https://www.npmjs.com/package/vue-scrollbar-live)
 [![Download Month](http://img.shields.io/npm/dm/vue-scrollbar-live.svg?style=flat-square)](https://www.npmjs.com/package/vue-scrollbar-live)
-![gzip with dependencies: 3.8kb](https://img.shields.io/badge/gzip--with--dependencies-3.8kb-brightgreen.svg "gzip with dependencies: 3.8kb")
+![gzip with dependencies: 4kb](https://img.shields.io/badge/gzip--with--dependencies-4kb-brightgreen.svg "gzip with dependencies: 4kb")
 ![typescript](https://img.shields.io/badge/typescript-supported-blue.svg "typescript")
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 

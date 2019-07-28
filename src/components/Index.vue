@@ -201,7 +201,7 @@ export default {
     },
   },
   created() {
-    if (!this.isMobile) {
+    if (!this.isMobile && typeof window !== 'undefined') {
       this.insertStyle()
       this.$once('hook:mounted', () => {
         this.nativeScrollbarWidth = getNativeScrollbarWidth(this.$refs.content)
