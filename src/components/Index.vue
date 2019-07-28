@@ -8,7 +8,7 @@
     <div class="scrollbar-content" :style="$_contentStyle" ref="content">
       <slot />
     </div>
-    <template v-if="!isMobile">
+    <template v-if="!isMobile && width.wrap && height.wrap">
       <Bar
         v-for="(barInfo, type) in scrollbars"
         :type="type"
