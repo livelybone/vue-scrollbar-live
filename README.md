@@ -73,24 +73,9 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/vue-scrollb
 | `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
 
 ## style
-For building style, you can use the css or scss file in lib directory.
-```js
-// scss
-import 'node_modules/vue-scrollbar-live/lib/css/index.scss'
+Since 5.0.0， you don't need to import the css file in your project
 
-// css
-import 'node_modules/vue-scrollbar-live/lib/css/index.css'
-```
-Or
-```scss
-// scss
-@import 'node_modules/vue-scrollbar-live/lib/css/index.scss'
-
-// css
-@import 'node_modules/vue-scrollbar-live/lib/css/index.css'
-```
-
-Or, you can build your custom style by copying and editing `index.scss`
+For rewrite style, you can copy the `index.scss` or `index.css` file, rewrite it use `!important`(this is necessary), and the import the file in your project
 
 // TODO
 ## Attention for application

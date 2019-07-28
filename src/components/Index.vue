@@ -8,16 +8,18 @@
     <div class="scrollbar-content" :style="$_contentStyle" ref="content">
       <slot />
     </div>
-    <Bar
-      v-for="(scrollType, type) in scrollbars"
-      :type="type"
-      :marginToWrap="marginToWrap"
-      :parentScroll="scrollPos[scrollType]"
-      :clientSize="type === 'x' ? width.wrap : height.wrap"
-      :scrollSize="type === 'x' ? width.content : height.content"
-      :key="type"
-      @scrollTo="setScroll($event, 'drag')"
-    />
+    <template v-if="!isMobile">
+      <Bar
+        v-for="(barInfo, type) in scrollbars"
+        :type="type"
+        :marginToWrap="marginToWrap"
+        :parentScroll="scrollPos[barInfo.scrollPropName]"
+        :clientSize="barInfo.size.wrap"
+        :scrollSize="barInfo.size.content"
+        :key="type"
+        @scrollTo="setScroll($event, 'drag')"
+      />
+    </template>
   </div>
 </template>
 
@@ -30,6 +32,7 @@ export default {
   name: 'Scrollbar',
   components: { Bar },
   props: {
+    isMobile: Boolean,
     maxHeight: [Number, String],
     scrollTo: [Number, Object],
     marginToWrap: {
@@ -46,20 +49,15 @@ export default {
       isBottom: true,
       isLeft: true,
       isRight: true,
-      nativeScrollbarWidth: { horizontal: 0, vertical: 0 },
+      nativeScrollbarWidth: { x: 0, y: 0 },
     }
   },
   computed: {
     scrollbars() {
-      const obj = {}
-      const { horizontal, vertical } = this.nativeScrollbarWidth
-      if (horizontal) obj.y = 'scrollTop'
-      if (vertical) obj.x = 'scrollLeft'
-      return obj
-    },
-    $_useNativeScrollbar() {
-      const { horizontal, vertical } = this.nativeScrollbarWidth
-      return !vertical && !horizontal
+      return {
+        x: { scrollPropName: 'scrollLeft', size: this.width },
+        y: { scrollPropName: 'scrollTop', size: this.height },
+      }
     },
     $_maxHeight() {
       return typeof this.maxHeight === 'number'
@@ -68,23 +66,27 @@ export default {
     },
     $_wrapStyle() {
       return {
-        height: this.$_useNativeScrollbar ? 'auto' : `${this.height.wrap}px`,
-        maxHeight: this.$_maxHeight,
-        overflow: 'hidden',
+        position: 'relative',
+        height: this.isMobile
+          ? 'auto !important'
+          : `${this.height.wrap}px !important`,
+        maxHeight: `${this.$_maxHeight} !important`,
+        padding: '0 !important',
+        overflow: 'hidden !important',
       }
     },
     $_contentStyle() {
-      if (this.$_useNativeScrollbar) {
+      if (this.isMobile) {
         return {
           maxHeight: this.$_maxHeight,
           overflow: 'scroll',
         }
       }
-      const scrollbarWidth = this.nativeScrollbarWidth
+      const { x, y } = this.nativeScrollbarWidth
       return {
-        width: `calc(100% + ${scrollbarWidth.horizontal}px)`,
-        maxHeight: `calc(${this.$_maxHeight} + ${scrollbarWidth.vertical}px)`,
-        overflow: 'scroll',
+        width: `calc(100% + ${y}px) !important`,
+        maxHeight: `calc(${this.$_maxHeight} + ${x}px) !important`,
+        overflow: 'scroll !important',
       }
     },
     maxScroll() {
@@ -128,19 +130,24 @@ export default {
   },
   methods: {
     getHeight() {
-      if (this.$refs.content) {
-        const {
-          scrollHeight,
-          clientHeight,
-          scrollWidth,
-          clientWidth,
-        } = this.$refs.content
-        this.height.wrap = clientHeight
-        this.height.content = scrollHeight
+      const fn = () => {
+        if (this.$refs.content) {
+          const {
+            scrollHeight,
+            clientHeight,
+            scrollWidth,
+            clientWidth,
+          } = this.$refs.content
+          this.height.wrap = clientHeight
+          this.height.content = scrollHeight
 
-        this.width.wrap = clientWidth
-        this.width.content = scrollWidth
+          this.width.wrap = clientWidth
+          this.width.content = scrollWidth
+        }
       }
+
+      fn()
+      this.$on('hook:updated', fn)
     },
     scroll() {
       const { scrollTop, scrollLeft } = this.$refs.content
@@ -177,16 +184,30 @@ export default {
         Utils.$addListener(this.$refs.content, 'scroll', this.scroll),
       )
     },
+    insertStyle() {
+      const id = 'scroll-bar'
+      const styleExist = document.getElementById(id)
+      if (!styleExist) {
+        const style = document.createElement('style')
+        style.id = id
+        style.innerText =
+          '.scrollbar-content::-webkit-scrollbar{width:0;height:0;}' +
+          '.scrollbar{position:absolute;border-radius:.25em;background:#eee;box-shadow:0 0 2px rgba(0,0,0,0.1);opacity:0;pointer-events:none}' +
+          '.scrollbar-y{right:0.25em;width:.5em}' +
+          '.scrollbar-x{bottom:0.25em;height:.5em}' +
+          '.scrollbar-wrap:hover .scrollbar{opacity:1;pointer-events:initial}'
+        document.head.appendChild(style)
+      }
+    },
   },
-  mounted() {
-    this.nativeScrollbarWidth = getNativeScrollbarWidth()
-    if (!this.$_useNativeScrollbar) {
-      this.getHeight()
-      this.$on('hook:updated', () => {
+  created() {
+    if (!this.isMobile) {
+      this.insertStyle()
+      this.$once('hook:mounted', () => {
+        this.nativeScrollbarWidth = getNativeScrollbarWidth(this.$refs.content)
         this.getHeight()
+        this.bind()
       })
-
-      this.bind()
     }
   },
 }

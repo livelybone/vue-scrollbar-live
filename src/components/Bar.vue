@@ -61,8 +61,8 @@ export default {
     },
     size() {
       return (
-        (this.clientSize / this.scrollSize) *
-        (this.clientSize - this.marginToWrap * 2)
+        (this.clientSize / this.scrollSize) * this.clientSize -
+        this.marginToWrap * 2
       )
     },
     positionRange() {
@@ -74,8 +74,9 @@ export default {
     $_barStyle() {
       return {
         ...(this.showBar ? showStyle : {}),
-        [this.$_scrollbarType.posPropName]: `${this.sPosition}px`,
-        [this.$_scrollbarType.sizeName]: `${this.size}px`,
+        [this.$_scrollbarType.posPropName]: `${this.sPosition}px !important`,
+        [this.$_scrollbarType.sizeName]: `${this.size}px !important`,
+        userSelect: 'none',
       }
     },
   },
@@ -115,9 +116,9 @@ export default {
       )
       this.$emit('scrollTo', {
         [this.$_scrollbarType.parentScrollPos]:
-          ((this.scrollSize - this.clientSize) / this.positionRange.max) *
-            position -
-          this.positionRange.min,
+          ((position - this.marginToWrap) /
+            (this.positionRange.max - this.marginToWrap)) *
+          (this.scrollSize - this.clientSize),
       })
       this.showBar = ev.type !== 'dragMoveEnd'
     },

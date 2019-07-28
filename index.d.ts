@@ -8,6 +8,13 @@ declare interface ScrollData {
 
 declare class VueScrollbar extends Vue {
   /**
+   * If the env is mobile, the component use the native scrollbar
+   *
+   * Require
+   * */
+  isMobile: boolean
+
+  /**
    * maxHeight of scroll wrap
    *
    * Require

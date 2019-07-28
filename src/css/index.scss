@@ -1,9 +1,6 @@
-$scrollbar-width: 8px;
+$scrollbar-width: 0.5em;
 
 .scrollbar-wrap {
-  position: relative !important;
-  padding: 0 !important;
-  overflow: hidden !important;
 }
 
 .scrollbar-content {
@@ -14,19 +11,17 @@ $scrollbar-width: 8px;
   border-radius: $scrollbar-width / 2;
   background: #eee;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-  cursor: default !important;
-  user-select: none;
   opacity: 0;
   pointer-events: none;
 }
 
 .scrollbar-y {
-  right: 4px;
+  right: 0.25em;
   width: $scrollbar-width;
 }
 
 .scrollbar-x {
-  bottom: 4px;
+  bottom: 0.25em;
   height: $scrollbar-width;
 }
 
