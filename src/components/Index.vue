@@ -191,7 +191,7 @@ export default {
         const style = document.createElement('style')
         style.id = id
         style.innerText =
-          '.scrollbar-content::scrollbar{width:0;height:0;}' +
+          '.scrollbar-content::-webkit-scrollbar{width:0;height:0;}' +
           '.scrollbar-content{-ms-overflow-style:none;scrollbar-width:none;}' +
           '.scrollbar{position:absolute;border-radius:.25em;background:#eee;box-shadow:0 0 2px rgba(0,0,0,0.1);opacity:0;pointer-events:none}' +
           '.scrollbar-y{right:0.25em;width:.5em}' +
