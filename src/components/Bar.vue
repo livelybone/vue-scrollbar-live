@@ -85,7 +85,7 @@ export default {
       handler(val) {
         setTimeout(() => {
           if (this.unbind) this.unbind()
-          if (val) {
+          if (val && typeof window !== 'undefined') {
             this.unbind = DragMove.bind(this.$refs.bar, this.drag)
           }
         }, 200)
