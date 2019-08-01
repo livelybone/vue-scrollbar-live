@@ -6,7 +6,7 @@ declare interface ScrollData {
   y: number
 }
 
-declare class VueScrollbar extends Vue {
+export interface VueScrollbarProps {
   /**
    * If the env is mobile, the component use the native scrollbar
    *
@@ -33,6 +33,16 @@ declare class VueScrollbar extends Vue {
    *
    * Default to 5
    * */
+  marginToWrap?: number
+}
+
+declare class VueScrollbar extends Vue implements VueScrollbarProps {
+  isMobile: boolean
+
+  maxHeight: number | string
+
+  scrollTo?: number | ScrollData
+
   marginToWrap?: number
 }
 
