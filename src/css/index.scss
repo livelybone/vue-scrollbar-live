@@ -1,0 +1,31 @@
+$scrollbar-width: 0.5em;
+
+.scrollbar-wrap {
+}
+
+.scrollbar-content {
+}
+
+.scrollbar {
+  position: absolute;
+  border-radius: $scrollbar-width / 2;
+  background: #eee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrollbar-y {
+  right: 0.25em;
+  width: $scrollbar-width;
+}
+
+.scrollbar-x {
+  bottom: 0.25em;
+  height: $scrollbar-width;
+}
+
+.scrollbar-wrap:hover .scrollbar {
+  opacity: 1;
+  pointer-events: initial;
+}
