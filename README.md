@@ -61,8 +61,10 @@ Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/vue-scrollb
 <script src="https://unpkg.com/vue-scrollbar-live/lib/umd/<--module-->.js"></script>
 ```
 
-## Props
+## Interface
 See in [index.d.ts](./index.d.ts)
+
+## Props
 | Name            | Type                                      | DefaultValue         | Description  |
 | -------------   | ----------------------------------------- | -------------------- | ------------ |
 | `isMobile`      | `Boolean`                                 | `false`              | Mark the device that component be used |
