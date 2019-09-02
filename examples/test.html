@@ -24,7 +24,7 @@ console.log(VueScrollbar)
 new Vue({
   el: '#module',
   template: '<scrollbar' +
-    ' :maxHeight="\'100vh\'"' +
+    ' maxHeight="calc(50% - 30px)"' +
     ' :isMobile="isMobile"' +
     ' :scrollTo="1"' +
     ' @reachBottom="log(\'reach bottom\')"' +
@@ -43,7 +43,7 @@ new Vue({
   data: function() {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
-      height: '90vh',
+      height: '20vh',
     }
   },
   methods: {

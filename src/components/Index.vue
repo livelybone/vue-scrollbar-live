@@ -8,14 +8,14 @@
     <div class="scrollbar-content" :style="$_contentStyle" ref="content">
       <slot />
     </div>
-    <template v-if="!isMobile && width.wrap && height.wrap">
+    <template v-if="!isMobile && width.content && height.content">
       <Bar
         v-for="(barInfo, type) in scrollbars"
         :type="type"
         :marginToWrap="marginToWrap"
         :parentScroll="scrollPos[barInfo.scrollPropName]"
-        :clientSize="barInfo.size.wrap"
-        :scrollSize="barInfo.size.content"
+        :clientSize="barInfo.size.content"
+        :scrollSize="barInfo.size.contentInner"
         :key="type"
         @scrollTo="setScroll($event, 'drag')"
       />
@@ -42,8 +42,9 @@ export default {
   },
   data() {
     return {
-      width: { wrap: 0, content: 0 },
-      height: { wrap: 0, content: 0 },
+      width: { content: 0, contentInner: 0 },
+      height: { content: 0, contentInner: 0 },
+      wrapClientHeight: 0,
       scrollPos: { scrollLeft: 0, scrollTop: 0 },
       isTop: true,
       isBottom: true,
@@ -67,9 +68,6 @@ export default {
     $_wrapStyle() {
       return {
         position: 'relative',
-        height: this.isMobile
-          ? 'auto !important'
-          : `${this.height.wrap}px !important`,
         maxHeight: `${this.$_maxHeight} !important`,
         padding: '0 !important',
         overflow: 'hidden !important',
@@ -85,14 +83,16 @@ export default {
       const { x, y } = this.nativeScrollbarWidth
       return {
         width: `calc(100% + ${y}px) !important`,
-        maxHeight: `calc(${this.$_maxHeight} + ${x}px) !important`,
+        maxHeight: `calc(${
+          this.wrapClientHeight ? `${this.wrapClientHeight}px` : '100%'
+        } + ${x}px) !important`,
         overflow: 'scroll',
       }
     },
     maxScroll() {
       return {
-        scrollLeft: this.width.content - this.width.wrap,
-        scrollTop: this.height.content - this.height.wrap,
+        scrollLeft: this.width.contentInner - this.width.content,
+        scrollTop: this.height.contentInner - this.height.content,
       }
     },
   },
@@ -138,11 +138,12 @@ export default {
             scrollWidth,
             clientWidth,
           } = this.$refs.content
-          this.height.wrap = clientHeight
-          this.height.content = scrollHeight
+          this.height.content = clientHeight
+          this.height.contentInner = scrollHeight
 
-          this.width.wrap = clientWidth
-          this.width.content = scrollWidth
+          this.width.content = clientWidth
+          this.width.contentInner = scrollWidth
+          this.wrapClientHeight = this.$refs.wrap.clientHeight
         }
       }
 
