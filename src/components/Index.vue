@@ -42,9 +42,8 @@ export default {
   },
   data() {
     return {
-      width: { content: 0, contentInner: 0 },
-      height: { content: 0, contentInner: 0 },
-      wrapClientHeight: 0,
+      width: { parent: 0, content: 0, contentInner: 0 },
+      height: { parent: 0, content: 0, contentInner: 0 },
       scrollPos: { scrollLeft: 0, scrollTop: 0 },
       isTop: true,
       isBottom: true,
@@ -61,13 +60,21 @@ export default {
       }
     },
     $_maxHeight() {
-      return typeof this.maxHeight === 'number'
-        ? `${this.maxHeight}px`
-        : this.maxHeight
+      if (typeof this.maxHeight === 'number') return `${this.maxHeight}px`
+      if (/%/.test(this.maxHeight)) {
+        return this.maxHeight.replace(
+          /(\d+)%/g,
+          (m, percent) => `${(this.height.parent * percent) / 100}px`,
+        )
+      }
+      return this.maxHeight
     },
     $_wrapStyle() {
       return {
         position: 'relative',
+        height: this.isMobile
+          ? 'auto !important'
+          : `${this.height.wrap}px !important`,
         maxHeight: `${this.$_maxHeight} !important`,
         padding: '0 !important',
         overflow: 'hidden !important',
@@ -83,9 +90,10 @@ export default {
       const { x, y } = this.nativeScrollbarWidth
       return {
         width: `calc(100% + ${y}px) !important`,
-        maxHeight: `calc(${
-          this.wrapClientHeight ? `${this.wrapClientHeight}px` : '100%'
-        } + ${x}px) !important`,
+        maxHeight: `calc(${this.$_maxHeight.replace(
+          /(^calc\()|(\)$)/g,
+          '',
+        )} + ${x}px) !important`,
         overflow: 'scroll',
       }
     },
@@ -140,10 +148,11 @@ export default {
           } = this.$refs.content
           this.height.content = clientHeight
           this.height.contentInner = scrollHeight
+          this.height.parent = this.$refs.wrap.parentElement.clientHeight
 
           this.width.content = clientWidth
           this.width.contentInner = scrollWidth
-          this.wrapClientHeight = this.$refs.wrap.clientHeight
+          this.width.parent = this.$refs.wrap.parentElement.clientWidth
         }
       }
 
