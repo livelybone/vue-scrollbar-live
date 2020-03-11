@@ -82,6 +82,7 @@ See in [index.d.ts](./index.d.ts)
 | `reachRight`          | none                  | Triggered when the scrollbar reach the right      |
 | `startDrag`           | `Object`              | Drag start event of the scrollbar                 |
 | `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
+| `scroll`              | `Event`               | Native scroll event                               | 
 
 ## style
 Since 5.0.0， you don't need to import the css file in your project

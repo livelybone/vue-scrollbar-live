@@ -159,9 +159,10 @@ export default {
       fn()
       this.$on('hook:updated', fn)
     },
-    scroll() {
+    scroll(e) {
       const { scrollTop, scrollLeft } = this.$refs.content
       this.setScroll({ scrollTop, scrollLeft })
+      this.$emit('scroll', e)
     },
     setScroll(
       { scrollTop = undefined, scrollLeft = undefined },
