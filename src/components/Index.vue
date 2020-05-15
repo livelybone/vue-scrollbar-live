@@ -74,7 +74,7 @@ export default {
         position: 'relative',
         height: this.isMobile
           ? 'auto !important'
-          : `${this.height.wrap}px !important`,
+          : `${this.height.content}px !important`,
         maxHeight: `${this.$_maxHeight} !important`,
         padding: '0 !important',
         overflow: 'hidden !important',
@@ -158,6 +158,9 @@ export default {
 
       fn()
       this.$on('hook:updated', fn)
+    },
+    updateHeight() {
+      this.getHeight()
     },
     scroll(e) {
       const { scrollTop, scrollLeft } = this.$refs.content

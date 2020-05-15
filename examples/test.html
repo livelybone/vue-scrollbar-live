@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>vue-scrollbar-live</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="../lib/umd/index.js"></script>
-  <style>
+    <meta charset="UTF-8">
+    <title>vue-scrollbar-live</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="../lib/umd/index.js"></script>
+    <style>
     body {
-      padding: 0;
-      margin: 0;
+        padding: 0;
+        margin: 0;
     }
 
     .scrollbar {
-      background: blue !important;
+        background: blue !important;
     }
-  </style>
+
+    #e1 {
+        width: 40vw;
+        height: 50vh;
+        padding: 20px 20px 30px 30px;
+        overflow: auto;
+        text-align: right;
+        background: #111;
+    }
+
+    #e2 {
+        /*width: calc(40vw + 10px);*/
+        display: inline-block;
+        transform: translateZ(0);
+        vertical-align: middle;
+        margin: 0;
+        width: 80vw;
+        height: 200vh;
+        background: #aaa;
+    }
+    </style>
 </head>
 <body style="height: 200vh">
 <div id="module"></div>
@@ -41,24 +61,33 @@ new Vue({
     '   @click="log"' +
     '   ></div>' +
     ' </scrollbar>',
-  data: function() {
+  data: function () {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
       height: '200vh',
     }
   },
   methods: {
-    log: function(e) {
+    log: function (e) {
       console.log(e)
     },
   },
   components: { 'scrollbar': VueScrollbar },
-  mounted: function() {
+  mounted: function () {
     setInterval(() => {
       // this.height = parseInt(this.height) + 10 + 'vh'
     }, 1000)
   },
 })
+</script>
+
+<!--<div id="e1">-->
+<!--    <div id="e2"></div>-->
+<!--</div>-->
+<script>
+// const el1 = document.getElementById('e1')
+// const el2 = document.getElementById('e2')
+// console.log(el1.scrollWidth, el2.clientWidth, el1.scrollHeight, el2.clientHeight)
 </script>
 </body>
 </html>

@@ -44,6 +44,11 @@ declare class VueScrollbar extends Vue implements VueScrollbarProps {
   scrollTo?: number | ScrollData
 
   marginToWrap?: number
+
+  /**
+   * Update height of parent element and this.$el
+   * */
+  updateHeight(): void
 }
 
 export default VueScrollbar
