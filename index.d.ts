@@ -41,6 +41,7 @@ declare class VueScrollbar extends Vue implements VueScrollbarProps {
 
   maxHeight: number | string
 
+  /** Synchronous effect */
   scrollTo?: number | ScrollData
 
   marginToWrap?: number

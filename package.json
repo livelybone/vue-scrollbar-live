@@ -1,6 +1,6 @@
 {
   "name": "vue-scrollbar-live",
-  "version": "5.4.1",
+  "version": "5.5.0",
   "description": "A vue scrollbar component, support SSR.",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -9,11 +9,11 @@
   "scss_path": "./lib/css/index.scss",
   "types": "./index.d.ts",
   "scripts": {
-    "build:css": "cross-env NODE_ENV=production node-sass ./src/css/index.scss ./lib/css/index.css --output-style compressed && ncp ./src/css/index.scss ./lib/css/index.scss",
+    "build:css": "cross-env NODE_ENV=production node-sass ./src/css/index.scss ./lib/css/index.css --output-style compressed && ncp ./src/css ./lib/css",
     "build:js": "cross-env NODE_ENV=production rollup -c",
     "dev": "rimraf ./lib && cross-env BUILD_ENV=watch node watch.js",
     "build": "rimraf ./lib && npm run build:css && npm run build:js",
-    "eslint": "eslint ./ --ext .vue,.js,.ts --fix",
+    "eslint": "eslint ./ --ext .vue,.ts,.js --fix",
     "test": "cross-env BABEL_ENV=test karma start --single-run",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "commit": "git-cz"
@@ -28,7 +28,6 @@
     "PC",
     "IE/Edge",
     "mobile",
-    "small size",
     "SSR support"
   ],
   "author": "2631541504@qq.com",
@@ -36,15 +35,17 @@
   "bugs": {
     "url": "https://github.com/livelybone/vue-scrollbar-live/issues"
   },
-  "homepage": "https://livelybone.github.io/vue/vue-scrollbar-live/",
+  "homepage": "https://github.com/livelybone/vue-scrollbar-live#readme",
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@babel/runtime": "^7.5.1",
     "@livelybone/singleton": "^1.1.1",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.11.0",
     "@vue/test-utils": "^1.0.0-beta.19",
-    "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
@@ -82,6 +83,8 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-uglify": "^6.0.2",
     "rollup-plugin-vue": "^5.0.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
     "vue": "^2.5.16",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
@@ -89,8 +92,8 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "@livelybone/mouse-events": "^1.0.0-beta",
-    "@livelybone/scroll-get": "^3.4.2"
+    "@livelybone/mouse-events": "^1.0.0",
+    "@livelybone/scroll-get": "^5.0.2"
   },
   "config": {
     "commitizen": {
@@ -103,7 +106,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,vue,ts}": [
+    "**/*.{js,ts,vue}": [
       "eslint --fix",
       "git update-index --again"
     ],

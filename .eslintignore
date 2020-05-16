@@ -5,8 +5,6 @@
 /lib/
 /test/
 
-**/*.ts
-
 **/*.spec.js
 **/*.test.js
 **/*.e2e.js

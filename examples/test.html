@@ -11,6 +11,10 @@
         margin: 0;
     }
 
+    .scrollbar-wrap {
+        width: 819px;
+    }
+
     .scrollbar {
         background: blue !important;
     }
@@ -40,6 +44,35 @@
 <div id="module"></div>
 
 <script type="text/javascript">
+const XContent = {
+  template: '<div' +
+    '   style="background:url(\'./bg.jpg\')"' +
+    '   :style="{height: height, width: width}"' +
+    '   @click="log"' +
+    '   ></div>',
+  data: function () {
+    return {
+      height: '200vh',
+      width: '',
+    }
+  },
+  methods: {
+    log: function (e) {
+      console.log(e)
+    },
+  },
+  mounted: function () {
+    setInterval(() => {
+      // this.height = parseInt(this.height) + 10 + 'vh'
+    }, 1000)
+
+    setTimeout(() => {
+      this.width = '1012px'
+      console.log('update')
+    }, 1000)
+  },
+}
+
 console.log(VueScrollbar)
 new Vue({
   el: '#module',
@@ -53,18 +86,15 @@ new Vue({
     ' @reachRight="log(\'reach right\')"' +
     ' @startDrag="log"' +
     ' @endDrag="log"' +
-    ' @scroll="log"' +
+    // ' @scroll="log"' +
     ' >' +
-    '   <div' +
-    '   style="width:200vw;background:url(\'./bg.jpg\')"' +
-    '   :style="{height: height}"' +
-    '   @click="log"' +
-    '   ></div>' +
+    '   <xcontent />' +
+    '   <div :style="{width: width}" />' +
     ' </scrollbar>',
   data: function () {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
-      height: '200vh',
+      width: '',
     }
   },
   methods: {
@@ -72,11 +102,16 @@ new Vue({
       console.log(e)
     },
   },
-  components: { 'scrollbar': VueScrollbar },
+  components: { 'scrollbar': VueScrollbar, 'xcontent': XContent },
   mounted: function () {
-    setInterval(() => {
-      // this.height = parseInt(this.height) + 10 + 'vh'
-    }, 1000)
+    // setInterval(() => {
+    //   // this.height = parseInt(this.height) + 10 + 'vh'
+    // }, 1000)
+    //
+    // setTimeout(() => {
+    //   this.width = '1012px'
+    //   console.log('update 1')
+    // }, 2000)
   },
 })
 </script>

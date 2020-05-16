@@ -27,6 +27,7 @@
 import { Utils } from '@livelybone/mouse-events'
 import { getNativeScrollbarWidth } from '@livelybone/scroll-get'
 import Bar from './Bar'
+import { listenDomChange } from '../utils/listen-dom-change'
 
 export default {
   name: 'Scrollbar',
@@ -137,30 +138,25 @@ export default {
     },
   },
   methods: {
-    getHeight() {
-      const fn = () => {
-        if (this.$refs.content) {
-          const {
-            scrollHeight,
-            clientHeight,
-            scrollWidth,
-            clientWidth,
-          } = this.$refs.content
-          this.height.content = clientHeight
-          this.height.contentInner = scrollHeight
-          this.height.parent = this.$refs.wrap.parentElement.clientHeight
-
-          this.width.content = clientWidth
-          this.width.contentInner = scrollWidth
-          this.width.parent = this.$refs.wrap.parentElement.clientWidth
-        }
-      }
-
-      fn()
-      this.$on('hook:updated', fn)
-    },
     updateHeight() {
-      this.getHeight()
+      if (!this.$refs.content) return
+
+      const {
+        scrollHeight,
+        clientHeight,
+        scrollWidth,
+        clientWidth,
+      } = this.$refs.content
+      this.height.content = clientHeight
+      this.height.contentInner = scrollHeight
+      this.height.parent = this.$refs.wrap.parentElement.clientHeight
+
+      this.width.content = clientWidth
+      this.width.contentInner = scrollWidth
+      this.width.parent = this.$refs.wrap.parentElement.clientWidth
+    },
+    getHeight() {
+      this.updateHeight()
     },
     scroll(e) {
       const { scrollTop, scrollLeft } = this.$refs.content
@@ -192,7 +188,7 @@ export default {
       this.isLeft = this.scrollPos.scrollLeft === 0
       this.isRight = this.scrollPos.scrollLeft === this.maxScroll.scrollLeft
     },
-    bind() {
+    bindScroll() {
       this.$once(
         'hook:beforeDestroy',
         Utils.$addListener(this.$refs.content, 'scroll', this.scroll),
@@ -220,8 +216,11 @@ export default {
       this.insertStyle()
       this.$once('hook:mounted', () => {
         this.nativeScrollbarWidth = getNativeScrollbarWidth(this.$refs.content)
-        this.getHeight()
-        this.bind()
+
+        this.updateHeight()
+        this.$on('hook:beforeDestroy', listenDomChange(this, this.updateHeight))
+
+        this.bindScroll()
       })
     }
   },
