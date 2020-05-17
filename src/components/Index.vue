@@ -28,6 +28,7 @@ import { Utils } from '@livelybone/mouse-events'
 import { getNativeScrollbarWidth } from '@livelybone/scroll-get'
 import Bar from './Bar'
 import { listenDomChange } from '../utils/listen-dom-change'
+import { insertStyle } from '../utils/utils'
 
 export default {
   name: 'Scrollbar',
@@ -138,8 +139,11 @@ export default {
     },
   },
   methods: {
+    updateScrollbarWidth() {
+      this.nativeScrollbarWidth = getNativeScrollbarWidth(this.$refs.content)
+    },
     updateHeight() {
-      if (!this.$refs.content) return
+      if (!this.$refs.content || typeof window === 'undefined') return
 
       const {
         scrollHeight,
@@ -163,10 +167,7 @@ export default {
       this.setScroll({ scrollTop, scrollLeft })
       this.$emit('scroll', e)
     },
-    setScroll(
-      { scrollTop = undefined, scrollLeft = undefined },
-      type = 'scroll',
-    ) {
+    setScroll({ scrollTop, scrollLeft }, type = 'scroll') {
       const needScroll = type !== 'scroll'
       if (scrollTop !== undefined) {
         this.setPos(scrollTop, 'scrollTop', needScroll)
@@ -178,9 +179,7 @@ export default {
     },
     setPos(val, type, needScroll) {
       this.scrollPos[type] = val
-      if (needScroll) {
-        this.$refs.content[type] = val
-      }
+      if (needScroll) this.$refs.content[type] = val
     },
     judgeOnBoundary() {
       this.isTop = this.scrollPos.scrollTop === 0
@@ -188,41 +187,30 @@ export default {
       this.isLeft = this.scrollPos.scrollLeft === 0
       this.isRight = this.scrollPos.scrollLeft === this.maxScroll.scrollLeft
     },
-    bindScroll() {
-      this.$once(
-        'hook:beforeDestroy',
-        Utils.$addListener(this.$refs.content, 'scroll', this.scroll),
-      )
-    },
-    insertStyle() {
-      const id = 'vue-scrollbar-live-module-style'
-      const styleExist = document.getElementById(id)
-      if (!styleExist) {
-        const style = document.createElement('style')
-        style.id = id
-        style.innerText =
-          '.scrollbar-wrap .scrollbar-content::-webkit-scrollbar{width:0;height:0;}' +
-          '.scrollbar-wrap .scrollbar-content{-ms-overflow-style:none;scrollbar-width:none;}' +
-          '.scrollbar-wrap .scrollbar{position:absolute;border-radius:.25em;background:#eee;box-shadow:0 0 2px rgba(0,0,0,0.1);opacity:0;pointer-events:none}' +
-          '.scrollbar-wrap .scrollbar-y{right:0.25em;width:.5em}' +
-          '.scrollbar-wrap .scrollbar-x{bottom:0.25em;height:.5em}' +
-          '.scrollbar-wrap:hover .scrollbar{opacity:1;pointer-events:initial}'
-        document.head.appendChild(style)
-      }
-    },
   },
   created() {
-    if (!this.isMobile && typeof window !== 'undefined') {
-      this.insertStyle()
-      this.$once('hook:mounted', () => {
-        this.nativeScrollbarWidth = getNativeScrollbarWidth(this.$refs.content)
+    const inPcBrowser = !this.isMobile && typeof window !== 'undefined'
 
-        this.updateHeight()
-        this.$on('hook:beforeDestroy', listenDomChange(this, this.updateHeight))
+    if (inPcBrowser) insertStyle()
 
-        this.bindScroll()
-      })
-    }
+    this.$once('hook:mounted', () => {
+      if (inPcBrowser) {
+        this.updateScrollbarWidth()
+        this.$once(
+          'hook:beforeDestroy',
+          Utils.$addListener(this.$refs.content, 'scroll', this.scroll),
+        )
+      }
+
+      this.updateHeight()
+      this.$on(
+        'hook:beforeDestroy',
+        listenDomChange(this, () => {
+          this.updateScrollbarWidth()
+          this.updateHeight()
+        }),
+      )
+    })
   },
 }
 </script>
