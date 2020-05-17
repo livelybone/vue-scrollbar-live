@@ -2,7 +2,6 @@
   <div
     v-show="$_show"
     class="scrollbar"
-    ref="bar"
     :class="'scrollbar-' + type"
     :style="$_barStyle"
     :draggable="false"
@@ -83,12 +82,12 @@ export default {
   watch: {
     $_show: {
       handler(val) {
-        setTimeout(() => {
+        this.$nextTick(() => {
           if (this.unbind) this.unbind()
-          if (val && typeof window !== 'undefined') {
-            this.unbind = DragMove.bind(this.$refs.bar, this.drag)
+          if (val && typeof window !== 'undefined' && this.$el) {
+            this.unbind = DragMove.bind(this.$el, this.drag)
           }
-        }, 200)
+        })
       },
       immediate: true,
     },
