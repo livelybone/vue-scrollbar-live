@@ -86,9 +86,15 @@ For rewrite style, you can copy the `index.scss` or `index.css` file, rewrite it
 | `startDrag`           | `Object`              | Drag start event of the scrollbar                 |
 | `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
 | `scroll`              | `Event`               | Native scroll event                               | 
+| `domChange`           | none                  | Triggered when the dom that refer to this comp changed        | 
 
 ## QA
 
 1. Error `Error: spawn node-sass ENOENT`
 
 > 你可能需要全局安装 node-sass，`npm i -g node-sass`
+
+2. The domChange event not triggered when the sub dom changed.
+
+> Check that the current browser support MutationObserver API.
+> If not, you can use MutationObserver polyfill to solve this problem

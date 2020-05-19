@@ -100,3 +100,8 @@ For rewrite style, you can copy the `index.scss` or `index.css` file, rewrite it
 1. Error `Error: spawn node-sass ENOENT`
 
 > You may need install node-sass globally, `npm i -g node-sass`
+
+2. The domChange event not triggered when the sub dom changed.
+
+> Check that the current browser support MutationObserver API.
+> If not, you can use MutationObserver polyfill to solve this problem
