@@ -152,7 +152,7 @@ export default {
     },
     $scrollTo(val) {
       this.$nextTick(() => {
-        if (val) {
+        if (val !== undefined && val !== null) {
           const pos = { scrollLeft: 0, scrollTop: 0 }
           if (val.x || val.y) {
             pos.scrollLeft = +val.x * this.maxScroll.scrollLeft
