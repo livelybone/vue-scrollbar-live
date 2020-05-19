@@ -109,19 +109,7 @@ export default {
   watch: {
     scrollTo: {
       handler(val) {
-        this.$nextTick(() => {
-          if (val) {
-            const pos = { scrollLeft: 0, scrollTop: 0 }
-            if (val.x || val.y) {
-              pos.scrollLeft = +val.x * this.maxScroll.scrollLeft
-              pos.scrollTop = +val.y * this.maxScroll.scrollTop
-            } else {
-              pos.scrollLeft = +val * this.maxScroll.scrollLeft
-              pos.scrollTop = +val * this.maxScroll.scrollTop
-            }
-            this.setScroll(pos, 'drag')
-          }
-        })
+        this.$scrollTo(val)
       },
       immediate: true,
     },
@@ -161,6 +149,21 @@ export default {
     },
     getHeight() {
       this.updateHeight()
+    },
+    $scrollTo(val) {
+      this.$nextTick(() => {
+        if (val) {
+          const pos = { scrollLeft: 0, scrollTop: 0 }
+          if (val.x || val.y) {
+            pos.scrollLeft = +val.x * this.maxScroll.scrollLeft
+            pos.scrollTop = +val.y * this.maxScroll.scrollTop
+          } else {
+            pos.scrollLeft = +val * this.maxScroll.scrollLeft
+            pos.scrollTop = +val * this.maxScroll.scrollTop
+          }
+          this.setScroll(pos, 'drag')
+        }
+      })
     },
     scroll(e) {
       const { scrollTop, scrollLeft } = this.$refs.content
