@@ -206,6 +206,7 @@ export default {
       this.$on(
         'hook:beforeDestroy',
         listenDomChange(this, () => {
+          this.$emit('domChange')
           this.updateScrollbarWidth()
           this.updateHeight()
         }),

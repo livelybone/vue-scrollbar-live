@@ -93,6 +93,7 @@ For rewrite style, you can copy the `index.scss` or `index.css` file, rewrite it
 | `startDrag`           | `Object`              | Drag start event of the scrollbar                 |
 | `endDrag`             | `Object`              | Drag end event of the scrollbar                   | 
 | `scroll`              | `Event`               | Native scroll event                               | 
+| `domChange`           | none                  | Triggered when the dom that refer to this comp changed        | 
 
 ## QA
 
