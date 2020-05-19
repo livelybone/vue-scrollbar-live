@@ -5,13 +5,18 @@ export function listenDomChange(comp: Vue, cb: () => void) {
   if ('MutationObserver' in window) {
     const observer = new MutationObserver(records => {
       const childrenChangeExceptScrollbar = records.some(r => {
-        if (!r.target) return true
-        const { className } = r.target as any
-        return !/^scrollbar\s/.test(className)
+        const { target } = r
+        if (comp.$el.contains(target)) {
+          if (!(target instanceof Element)) return true
+
+          const { className } = target
+          return !/^scrollbar\s/.test(className)
+        }
+        return target.contains(comp.$el)
       })
       if (childrenChangeExceptScrollbar) cb()
     })
-    observer.observe(comp.$el, {
+    observer.observe(document.body, {
       attributes: true,
       childList: true,
       subtree: true,
